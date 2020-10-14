@@ -5,9 +5,9 @@ import moment from 'moment';
 
 const FooterText = ({post}) => {
   const {score, by, time, descendants} = post;
-  const pointsText = `${score} ${score > 1 ? 'points ' : 'point '}`;
+  const pointsText = `${score} ${score === 1 ? 'point ' : 'points '}`;
   const commentsText = `${descendants} ${
-    descendants > 1 ? 'comments ' : 'comment '
+    descendants === 1 ? 'comment ' : 'comments '
   }`;
   return (
     <Text>

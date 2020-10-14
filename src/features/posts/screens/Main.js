@@ -13,6 +13,9 @@ import * as postsModule from '../redux/modules/posts';
 import * as postsSelectors from '../redux/selectors/posts';
 import * as postsActions from '../redux/reducers/posts';
 import PostsListItem from '../components/PostsListItem';
+import Spacing from '../../../components/Spacing';
+import {faSync} from '@fortawesome/free-solid-svg-icons/faSync';
+import IconButton from '../../../components/IconButton';
 
 const styles = StyleSheet.create({
   flex1: {
@@ -28,7 +31,17 @@ const styles = StyleSheet.create({
 class PostsMainScreen extends Component {
   interval;
   componentDidMount() {
-    const {getPosts} = this.props;
+    const {getPosts, navigation} = this.props;
+    navigation.setOptions({
+      headerRight: () => (
+        <IconButton
+          icon={faSync}
+          onPress={() => {
+            getPosts();
+          }}
+        />
+      ),
+    });
     getPosts();
     this.interval = setInterval(() => {
       getPosts();
@@ -52,20 +65,24 @@ class PostsMainScreen extends Component {
             keyExtractor={(item) => item.toString()}
           />
           <View style={styles.buttonContainer}>
-            <Button
-              title="Prev"
-              disabled={currentPage === 1}
-              onPress={() => {
-                setPage({nextPage: currentPage - 1});
-              }}
-            />
+            <Spacing size={1} right>
+              <Button
+                title="Prev"
+                disabled={currentPage === 1}
+                onPress={() => {
+                  setPage({nextPage: currentPage - 1});
+                }}
+              />
+            </Spacing>
             <Text>|</Text>
-            <Button
-              title="Next"
-              onPress={() => {
-                setPage({nextPage: currentPage + 1});
-              }}
-            />
+            <Spacing size={1} left>
+              <Button
+                title="Next"
+                onPress={() => {
+                  setPage({nextPage: currentPage + 1});
+                }}
+              />
+            </Spacing>
           </View>
         </View>
       </SafeAreaView>
